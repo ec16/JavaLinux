@@ -1,0 +1,54 @@
+package PageObject;
+import TestCases.AutoTest;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+public class AutoPageObject extends AutoTest{
+    public WebDriver driver;
+
+    //Driver is instantiated in the constructor
+    public AutoPageObject(WebDriver driver) {
+        this.driver = driver;
+    }
+
+    //Methods - typeGoodUserName(),typeGoodPassword
+    public void typeGoodUserName() {
+        WebElement UserName = driver.findElement(By.id("user-name"));
+        UserName.sendKeys("standard_user");
+    }
+
+    public void typeGoodPassword() {
+        WebElement Password = driver.findElement(By.id("password"));
+        Password.sendKeys("secret_sauce");
+    }
+
+    public void Login() {
+        WebElement Login = driver.findElement(By.id("login-button"));
+        Login.click();
+
+    }
+
+    public void Button() {
+        WebElement button = driver.findElement(By.className("bm-burger-button"));
+        button.click();
+    }
+
+    public void Logout() {
+        WebElement logout = driver.findElement(By.id("logout_sidebar_link"));
+        logout.click();
+    }
+
+    public void typeBadUserName() {
+        WebElement UserName = driver.findElement(By.id("user-name"));
+        UserName.sendKeys("hi");
+    }
+    public void typeBadPassword() {
+        WebElement Password = driver.findElement(By.id("password"));
+        Password.sendKeys("hi");
+    }
+    public void Login1() {
+        WebElement Login = driver.findElement(By.id("login-button"));
+        Login.click();
+    }
+}
