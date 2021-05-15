@@ -1,0 +1,64 @@
+package TestCases;
+
+import PageObject.AutoPageObject;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebElement;
+//import org.openqa.selenium.support.ui.ExpectedCondition;
+//import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.testng.annotations.*;
+//import org.openqa.selenium.support.ui.WebDriverWait;
+
+public class AutoTest {
+  WebDriver driver;
+    @BeforeClass
+        public void Setup(){
+        System.setProperty("webdriver.chrome.driver","/home/smart/chromedriver/chromedriver");
+           //creating a new Chrome webDriver, Open Chrome
+            driver = new ChromeDriver();
+//bring the new browser to focus
+            ((JavascriptExecutor) driver).executeScript("alert('Test')");
+            driver.switchTo().alert().accept();
+            driver.manage().window().maximize();
+            driver.get("https://www.saucedemo.com/");
+        AutoPageObject auto = new AutoPageObject(driver);
+        auto.typeGoodUserName();
+        auto.typeGoodPassword();
+        auto.Login();
+        auto.Button();
+    }
+        @Test
+        public void SuccessfulLogin(){
+            String login = driver.getCurrentUrl();
+            if (login.endsWith("inventory.html")) {
+                System.out.println("Test1 Passed "+login);
+            } else {
+                System.out.println("Test1 Failed "+login);
+            }
+        }
+
+        @Test
+        public void UnSuccessfulLogin(){
+            AutoPageObject auto = new AutoPageObject(driver);
+            auto.Logout();
+            auto.typeBadUserName();
+            auto.typeBadPassword();
+            auto.Login1();
+            WebElement errorMessage = driver.findElement(By.tagName("h3"));
+            String error = errorMessage.getText();
+
+            if (error.equals("Epic sadface: Username and password do not match any user in this service")) {
+                System.out.println("Test2 Passed");
+            } else {
+                System.out.println("Test2 Failed");
+            }
+        }
+
+        @AfterClass
+        public void tearDown() {
+            //Close browser
+            driver.close();
+        }
+    }
